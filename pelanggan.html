@@ -109,6 +109,17 @@ body{
   color:white;
 }
 
+.alamat{
+
+  margin-top:8px;
+
+  font-size:14px;
+
+  color:#b8c4da;
+
+  line-height:1.6;
+}
+
 .tagihan{
 
   text-align:center;
@@ -216,6 +227,13 @@ body{
       -
     </div>
 
+    <div
+      class="alamat"
+      id="alamat"
+    >
+      -
+    </div>
+
   </div>
 
   <div class="card">
@@ -229,6 +247,17 @@ body{
       id="paket"
     >
       -
+    </div>
+
+    <div class="title" style="margin-top:16px;">
+      Periode
+    </div>
+
+    <div
+      class="value"
+      id="periode"
+    >
+      Mei 2026
     </div>
 
   </div>
@@ -288,6 +317,11 @@ document.getElementById(
   'paket'
 ).innerHTML =
   data.paket || '-';
+
+document.getElementById(
+  'alamat'
+).innerHTML =
+  data.alamat || '-';
 
 document.getElementById(
   'harga'
