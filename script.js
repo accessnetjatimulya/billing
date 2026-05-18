@@ -1,5 +1,5 @@
 // GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfyf...Isian_Deployment_Anda.../exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwY7cQQVrtrJ9sIRe7DSocQSJPDJG5FbsP3Hj4pOkSfW4OTcwHoJ8uCAQl67e3VnocxKA/exec";
 
 let allPelanggan = [];
 let allInvoice = [];
