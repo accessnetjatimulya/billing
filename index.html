@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
 <meta charset="UTF-8">
 
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 />
 
 <title>ACCESSNET BILLING</title>
@@ -21,6 +22,12 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  overflow-x:hidden;
 }
 
 body{
@@ -91,7 +98,9 @@ body::after{
   width:100%;
   max-width:370px;
 
-  padding:35px 25px;
+  margin:20px;
+
+  padding:35px 22px;
 
   border-radius:24px;
 
@@ -114,32 +123,16 @@ body::after{
   z-index:2;
 }
 
-.icon-box{
-
-  width:90px;
-  height:90px;
-
-  margin:auto;
-  margin-bottom:24px;
-
-  border-radius:24px;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  background:
-    linear-gradient(
-      145deg,
-      #274b91,
-      #1a315e
-    );
-}
-
 .logo{
 
-  width:58px;
-  height:58px;
+  width:120px;
+
+  max-width:100%;
+
+  display:block;
+
+  margin:auto;
+  margin-bottom:20px;
 
   object-fit:contain;
 }
@@ -202,7 +195,7 @@ input{
   border:
     1px solid rgba(255,255,255,0.05);
 
-  padding:0 18px;
+  padding:0 16px;
 
   color:white;
 
@@ -261,29 +254,30 @@ button:hover{
 
   .card{
 
-    padding:30px 20px;
+    width:100%;
+
+    margin:15px;
+
+    padding:28px 18px;
   }
 
   h1{
-
     font-size:24px;
   }
 
   .desc{
-
     font-size:13px;
-  }
-
-  .icon-box{
-
-    width:82px;
-    height:82px;
+    line-height:1.6;
   }
 
   .logo{
+    width:100px;
+  }
 
-    width:50px;
+  input,
+  button{
     height:50px;
+    font-size:14px;
   }
 }
 
@@ -293,15 +287,11 @@ button:hover{
 
 <div class="card">
 
-  <div class="icon-box">
-
-    <img
-      src="logo.png"
-      alt="ACCESSNET"
-      class="logo"
-    >
-
-  </div>
+  <img
+    src="logo.png"
+    alt="ACCESSNET"
+    class="logo"
+  >
 
   <h1>Pembayaran Tagihan</h1>
 
