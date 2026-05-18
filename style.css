@@ -4,6 +4,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* TOPBAR FOR MOBILE */
 .mobile-topbar {
   display: none;
   background: #2c3e50;
@@ -16,6 +17,7 @@ body {
   z-index: 1001;
 }
 
+/* SIDEBAR */
 .sidebar {
   position: fixed;
   top: 0;
@@ -47,12 +49,20 @@ body {
   color: #fff;
 }
 
+.btn-sidebar.active {
+  background: #0d6efd !important;
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* CONTENT */
 .main-content {
   margin-left: 250px;
   padding: 20px;
   transition: margin 0.3s ease;
 }
 
+/* PAGE */
 .page {
   display: none;
 }
@@ -64,10 +74,43 @@ body {
 .card {
   border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-@media(max-width:991.98px) {
+#f_hp::placeholder {
+  color: #d0d0d0;
+  opacity: 1;
+  font-size: 14px;
+}
+
+textarea.form-control {
+  min-height: 45px !important;
+  border-radius: 14px !important;
+  resize: none;
+}
+
+/* PDF PREVIEW RESPONSIVE CONTAINER */
+.pdf-scroll-container {
+  overflow-x: auto;
+  width: 100%;
+  background: #eee;
+  padding: 15px 0;
+}
+
+#invoicePdfArea {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  margin: auto;
+  padding: 14px 40px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  color: #222;
+  position: relative;
+}
+
+/* RESPONSIVE MEDIA QUERIES */
+@media(max-width: 991.98px) {
   .mobile-topbar {
     display: flex;
     justify-content: space-between;
@@ -88,40 +131,28 @@ body {
   }
 }
 
-#f_hp::placeholder {
-  color: #d0d0d0;
-  opacity: 1;
-  font-size: 14px;
-}
-
-textarea.form-control {
-  min-height: 45px !important;
-  border-radius: 14px !important;
-  resize: none;
-}
-
-.btn-sidebar.active {
-  background: #0d6efd !important;
-  color: #fff !important;
-  font-weight: bold;
-}
-
-.pdf-scroll-container {
-  overflow-x: auto;
-  width: 100%;
-  background: #eee;
-  padding: 15px 0;
-}
-
 @media (max-width: 830px) {
-  #invoicePdfArea { transform: scale(0.9); transform-origin: top center; margin-bottom: -100px !important; }
+  #invoicePdfArea {
+    transform: scale(0.9);
+    transform-origin: top center;
+    margin-bottom: -100px !important;
+  }
 }
 @media (max-width: 720px) {
-  #invoicePdfArea { transform: scale(0.75); margin-bottom: -250px !important; }
+  #invoicePdfArea {
+    transform: scale(0.75);
+    margin-bottom: -250px !important;
+  }
 }
 @media (max-width: 576px) {
-  #invoicePdfArea { transform: scale(0.55); margin-bottom: -480px !important; }
+  #invoicePdfArea {
+    transform: scale(0.55);
+    margin-bottom: -480px !important;
+  }
 }
 @media (max-width: 440px) {
-  #invoicePdfArea { transform: scale(0.42); margin-bottom: -620px !important; }
+  #invoicePdfArea {
+    transform: scale(0.42);
+    margin-bottom: -620px !important;
+  }
 }
