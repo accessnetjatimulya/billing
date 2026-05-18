@@ -359,6 +359,381 @@ function showPage(pageId){
 }
 
 </script>
+<!-- GANTI SEMUA google.script.run MENJADI FETCH API -->
 
+<script>
+
+/* =========================
+   URL WEB APP APPS SCRIPT
+========================= */
+const API_URL =
+'https://script.google.com/macros/s/ISI_WEBAPP_URL_KAMU/exec';
+
+/* =========================
+   LOAD DATA PELANGGAN
+========================= */
+async function loadDataPelanggan(){
+
+  try{
+
+    const response =
+      await fetch(API_URL + '?action=getPelanggan');
+
+    const data =
+      await response.json();
+
+    allPelanggan = data;
+
+    renderTable(data);
+    updateDataList(data);
+    updateTotalPelanggan(data);
+
+  }catch(err){
+
+    console.log(err);
+    alert('Gagal mengambil data pelanggan');
+
+  }
+}
+
+/* =========================
+   SIMPAN DATA PELANGGAN
+========================= */
+async function simpanData(){
+
+  if(cekIdPelanggan()){
+    alert('ID sudah digunakan');
+    return;
+  }
+
+  const formData = {
+
+    action:'savePelanggan',
+
+    ID:
+      document.getElementById('f_id').value,
+
+    NAMA:
+      document.getElementById('f_nama').value,
+
+    ALAMAT:
+      document.getElementById('f_alamat').value,
+
+    NO_HP:
+      document.getElementById('f_kode_negara').value +
+      document.getElementById('f_hp').value,
+
+    PAKET:
+      document.getElementById('f_paket').value,
+
+    HARGA_PAKET:
+      document.getElementById('f_harga').value,
+
+    TIPE_LANGGANAN:
+      document.getElementById('f_tipe').value
+  };
+
+  try{
+
+    const response = await fetch(API_URL,{
+
+      method:'POST',
+
+      body:JSON.stringify(formData)
+
+    });
+
+    const result =
+      await response.text();
+
+    alert(result);
+
+    bootstrap.Modal
+      .getInstance(
+        document.getElementById('modalPelanggan')
+      )
+      .hide();
+
+    loadDataPelanggan();
+
+  }catch(err){
+
+    console.log(err);
+    alert('Gagal menyimpan data');
+
+  }
+}
+
+/* =========================
+   HAPUS PELANGGAN
+========================= */
+async function hapusPelanggan(id){
+
+  if(!confirm('Hapus pelanggan?')) return;
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=deletePelanggan&id=' +
+        encodeURIComponent(id)
+      );
+
+    const result =
+      await response.text();
+
+    alert(result);
+
+    loadDataPelanggan();
+
+  }catch(err){
+
+    console.log(err);
+    alert('Gagal menghapus');
+
+  }
+}
+
+/* =========================
+   LOAD DATA INVOICE
+========================= */
+async function loadDataInvoice(){
+
+  const tbody =
+    document.getElementById(
+      'tabelInvoiceBody'
+    );
+
+  tbody.innerHTML =
+    '<tr><td colspan="9" class="text-center">Memuat data...</td></tr>';
+
+  try{
+
+    const response =
+      await fetch(API_URL + '?action=getInvoice');
+
+    const data =
+      await response.json();
+
+    if(!data || data.length === 0){
+
+      tbody.innerHTML =
+        '<tr><td colspan="9" class="text-center">Tidak ada data</td></tr>';
+
+      return;
+    }
+
+    let html = '';
+
+    data.forEach(function(inv){
+
+      html += `
+        <tr>
+          <td>${inv.NO_INVOICE}</td>
+          <td>${inv.TANGGAL}</td>
+          <td>${inv.ID}</td>
+          <td>${inv.NAMA}</td>
+          <td>${inv.PERIODE}</td>
+          <td>${inv.PAKET}</td>
+          <td>Rp ${Number(inv.TAGIHAN).toLocaleString('id-ID')}</td>
+
+          <td>
+            ${
+              inv.PDF
+              ?
+              `<a href="${inv.PDF}" target="_blank"
+               class="btn btn-success btn-sm">
+               PDF
+               </a>`
+              :
+              '-'
+            }
+          </td>
+
+          <td>
+            <button
+              class="btn btn-dark btn-sm"
+              onclick="hapusInvoice('${inv.NO_INVOICE}')"
+            >
+              Hapus
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = html;
+
+  }catch(err){
+
+    console.log(err);
+
+    tbody.innerHTML =
+      '<tr><td colspan="9" class="text-danger text-center">Gagal load data</td></tr>';
+
+  }
+}
+
+/* =========================
+   HAPUS INVOICE
+========================= */
+async function hapusInvoice(noInvoice){
+
+  if(!confirm('Hapus invoice ini?')) return;
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=deleteInvoice&noInvoice=' +
+        encodeURIComponent(noInvoice)
+      );
+
+    const result =
+      await response.text();
+
+    alert(result);
+
+    loadDataInvoice();
+
+  }catch(err){
+
+    console.log(err);
+    alert('Gagal hapus invoice');
+
+  }
+}
+
+/* =========================
+   SIMPAN INVOICE
+========================= */
+async function downloadInvoicePDF(){
+
+  const element =
+    document.getElementById(
+      'invoicePdfArea'
+    );
+
+  const invoice =
+    document.getElementById(
+      'pdfInvoice'
+    ).innerText;
+
+  const opt = {
+
+    margin:0,
+
+    filename:
+      invoice + '.pdf',
+
+    image:{
+      type:'jpeg',
+      quality:1
+    },
+
+    html2canvas:{
+      scale:2,
+      useCORS:true
+    },
+
+    jsPDF:{
+      unit:'px',
+      format:[794,1123],
+      orientation:'portrait'
+    }
+  };
+
+  try{
+
+    const pdfBlob =
+      await html2pdf()
+      .set(opt)
+      .from(element)
+      .outputPdf('blob');
+
+    const reader =
+      new FileReader();
+
+    reader.readAsDataURL(pdfBlob);
+
+    reader.onloadend = async function(){
+
+      const base64 =
+        reader.result.split(',')[1];
+
+      const data = {
+
+        action:'saveInvoice',
+
+        noInvoice:
+          document.getElementById('pdfInvoice').innerText,
+
+        tanggal:
+          document.getElementById('pdfTanggal').innerText,
+
+        id:
+          document.getElementById('pdfIdpel').innerText,
+
+        nama:
+          document.getElementById('pdfNama').innerText,
+
+        periode:
+          document.getElementById('pdfPeriode').innerText,
+
+        paket:
+          document.getElementById('pdfDeskripsi').innerText,
+
+        tagihan:
+          document.getElementById('pdfGrand').innerText,
+
+        base64:base64
+      };
+
+      try{
+
+        const response =
+          await fetch(API_URL,{
+
+            method:'POST',
+
+            body:JSON.stringify(data)
+
+          });
+
+        const url =
+          await response.text();
+
+        alert('Invoice berhasil disimpan');
+
+        loadDataInvoice();
+
+        showPage('dataInvoicePage');
+
+        html2pdf()
+          .set(opt)
+          .from(element)
+          .save();
+
+        window.open(url,'_blank');
+
+      }catch(err){
+
+        console.log(err);
+        alert('Gagal simpan invoice');
+
+      }
+    };
+
+  }catch(err){
+
+    console.log(err);
+    alert('Gagal generate PDF');
+
+  }
+}
+
+</script>
 </body>
 </html>
