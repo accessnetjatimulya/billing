@@ -80,7 +80,7 @@
 const API =
 'https://script.google.com/macros/s/AKfycbyJeEISpQ8es5L-kH9zUFs1ADKkVMax1wi6CJbQK-2rz-rAwn-SKV2tijJAC0L-lHYH/exec';
 
-function login(){
+async function login(){
 
   const id =
     document.getElementById('id').value;
@@ -88,11 +88,16 @@ function login(){
   const hp =
     document.getElementById('hp').value;
 
-  fetch(
-    `${API}?action=loginPelanggan&id=${id}&hp=${hp}`
-  )
-  .then(r => r.json())
-  .then(res => {
+  const url =
+    `${API}?action=loginPelanggan&id=${id}&hp=${hp}`;
+
+  try{
+
+    const response =
+      await fetch(url);
+
+    const res =
+      await response.json();
 
     if(res.status){
 
@@ -101,14 +106,22 @@ function login(){
         JSON.stringify(res.data)
       );
 
-      location.href =
+      window.location =
         'pelanggan.html';
 
     }else{
 
       alert(res.message);
     }
-  });
+
+  }catch(err){
+
+    console.log(err);
+
+    alert(
+      'Gagal koneksi ke server'
+    );
+  }
 }
 
 </script>
