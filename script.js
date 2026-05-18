@@ -1,7 +1,7 @@
 /* ==========================================================================
    ALAMAT WEB APP GOOGLE (PASTIKAN COCOK DENGAN URL DEPLOYMENT ANDA)
    ========================================================================== */
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyJFt7mbDqRc2zh8fdE-dEgpq2syC3fWg4Hx6z0O7Xovj8V8HrYgJoE3Qpu3HuAArsw/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyNdcsN9z-iepGVnTkC5Kuxtesix5P9DNpeaSsYOYe-v91dWbzrAe1onUEbUD5s6Myr9Q/exec";
 
 let allPelanggan = [];
 let allInvoice = [];
