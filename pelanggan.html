@@ -419,21 +419,34 @@ function parseTanggal(str){
   // rapikan spasi
   str = str.replace(/\s+/g,' ').trim();
 
-  // pisah tanggal & jam
-  const [tanggal,waktu='00.00'] =
-    str.split(' ');
+  // pisah tanggal & waktu
+  const parts = str.split(' ');
 
-  // pisah tanggal
-  const [dd,mm,yyyy] =
-    tanggal.split('/');
+  const tanggal = parts[0];
+  const waktu = parts[1] || '00.00';
 
-  // ubah titik jadi :
-  const jam =
-    waktu.replace(/\./g,':');
+  // tanggal
+  const tgl = tanggal.split('/');
 
-  // buat format ISO
+  const dd = parseInt(tgl[0],10);
+  const mm = parseInt(tgl[1],10) - 1;
+  const yyyy = parseInt(tgl[2],10);
+
+  // waktu
+  const jamPart = waktu.split('.');
+
+  const hh = parseInt(jamPart[0] || 0,10);
+  const mi = parseInt(jamPart[1] || 0,10);
+  const ss = parseInt(jamPart[2] || 0,10);
+
+  // buat date manual
   return new Date(
-    `${yyyy}-${mm}-${dd}T${jam}`
+    yyyy,
+    mm,
+    dd,
+    hh,
+    mi,
+    ss
   );
 }
 
