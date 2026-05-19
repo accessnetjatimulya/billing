@@ -412,34 +412,40 @@ const data =
     )
   );
 
+console.log(data);
+console.log(data.expired_at);
+console.log(parseTanggal(data.expired_at));
+
 function parseTanggal(str){
 
   if(!str) return null;
 
-  str = str.replace(/\s+/g,' ').trim();
+  str = str.trim();
 
-  const parts =
+  const [tanggal,waktu] =
     str.split(' ');
-
-  const tanggal =
-    parts[0];
-
-  const waktu =
-    parts[1] || '00.00';
 
   const [dd,mm,yyyy] =
     tanggal.split('/');
 
-  const jam =
-    waktu.split('.');
+  let hh = 0;
+  let mi = 0;
+
+  if(waktu){
+
+    const jam =
+      waktu.split('.');
+
+    hh = parseInt(jam[0]) || 0;
+    mi = parseInt(jam[1]) || 0;
+  }
 
   return new Date(
     Number(yyyy),
     Number(mm)-1,
     Number(dd),
-    Number(jam[0] || 0),
-    Number(jam[1] || 0),
-    Number(jam[2] || 0)
+    hh,
+    mi
   );
 }
 
