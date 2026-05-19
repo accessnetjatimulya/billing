@@ -342,7 +342,6 @@ async function kirimKonfirmasi(){
       mimeType: file.type
     };
 
-    // PERBAIKAN UTAMA: Menggunakan text/plain agar tidak memicu CORS Preflight (OPTIONS)
     const res = await fetch("https://script.google.com/macros/s/AKfycbwB188MvECJ9-s91plC8thYxdjIsEEXtIrTNvZl7twDyNQXAH4nM_l_qOSdW2qu0cuM/exec", {
       method: "POST",
       headers: {
@@ -354,8 +353,8 @@ async function kirimKonfirmasi(){
     const result = await res.json();
 
     if(result.status){
-      alert("Berhasil terkirim ke Telegram");
-      hapusFile(); // Reset form gambar setelah sukses
+      // PENTING: Langsung alihkan ke halaman sukses tanpa alert/popup
+      window.location.href = "success.html";
     } else {
       showPopup("Gagal: " + result.message);
     }
@@ -364,7 +363,7 @@ async function kirimKonfirmasi(){
     console.error(error);
     showPopup("Terjadi kesalahan koneksi atau sistem.");
   } finally {
-    // Kembalikan tombol ke sedia kala
+    // Kembalikan tombol ke sedia kala jika proses gagal
     btnKirim.disabled = false;
     btnKirim.innerText = originalText;
   }
