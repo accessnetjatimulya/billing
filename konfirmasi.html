@@ -340,11 +340,6 @@ async function kirimKonfirmasi(){
 	  body: JSON.stringify(payload)
 	});
 	
-	if(!res.ok){
-	  showPopup("Server error / gagal koneksi");
-	  return;
-	}
-
   const result = await res.json();
 
   if(result.status){
