@@ -78,27 +78,27 @@ body{
 </div>
 
 <script>
-// 1. Kunci status di sessionStorage saat pertama kali mendarat dari konfirmasi.html
-// Ini mencegah user ditendang ke index.html ketika menekan tombol refresh
-if (!sessionStorage.getItem('konfirmasi_sukses_terkunci')) {
-  // Jika datang resmi membawa token 'konfirmasi_sukses', set kunci permanen selama tab dibuka
-  if (sessionStorage.getItem('konfirmasi_sukses') == '1') {
-    sessionStorage.setItem('konfirmasi_sukses_terkunci', '1');
+// 1. Cek apakah halaman ini dibuka karena di-refresh (reload)
+const tipeNavigasi = window.performance.getEntriesByType("navigation")[0]?.type;
+
+if (tipeNavigasi === "reload") {
+  // Jika di-refresh, hapus status sukses dan langsung tendang ke index.html
+  sessionStorage.removeItem('konfirmasi_sukses');
+  window.location.replace('index.html');
+} else {
+  // Jika pertama kali mendarat resmi dari konfirmasi.html, cek tokennya
+  if (sessionStorage.getItem('konfirmasi_sukses') !== '1') {
+    window.location.replace('index.html');
   }
 }
 
-// 2. Validasi Keamanan: Jika tidak punya kunci akses, wajib ke index.html
-if (sessionStorage.getItem('konfirmasi_sukses_terkunci') !== '1') {
-  window.location.replace('index.html');
-}
-
-// 3. Matikan Fungsi Tombol Kembali (Disable Back)
+// 2. Matikan Fungsi Tombol Kembali (Disable Back)
 history.pushState(null, null, location.href);
 window.onpopstate = function(){
   history.go(1);
 };
 
-// Kunci tambahan untuk browser mobile (Chrome/Safari di HP) agar tidak bisa ditarik back
+// Kunci tambahan untuk browser HP agar tidak bisa di-swipe back
 window.addEventListener('load', function() {
   setTimeout(function() {
     history.pushState(null, null, location.href);
