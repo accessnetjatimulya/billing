@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
+
+<title>Konfirmasi Selesai</title>
+
+<style>
+
+body{
+  margin:0;
+  background:#07152f;
+  color:white;
+  font-family:Poppins,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+  text-align:center;
+}
+
+.box{
+  max-width:400px;
+}
+
+.logo{
+  width:120px;
+  margin-bottom:20px;
+}
+
+.check{
+  font-size:60px;
+  color:#00e676;
+  margin-bottom:20px;
+}
+
+.title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.desc{
+  line-height:1.8;
+  opacity:.85;
+}
+
+</style>
+</head>
+<body>
+
+<div class="box">
+
+  <img
+    src="logo.png"
+    class="logo"
+  >
+
+  <div class="check">
+    ✓
+  </div>
+
+  <div class="title">
+    Konfirmasi Selesai
+  </div>
+
+  <div class="desc">
+    Konfirmasi pembayaran Anda telah berhasil dikirim ke sistem admin ACCESSNet.
+    <br><br>
+    Silakan bisa tutup halaman ini sekarang.
+    <br><br>
+    Terima kasih sudah berlangganan di ACCESSNet
+  </div>
+
+</div>
+
+<script>
+
+// wajib lewat konfirmasi
+if(
+  sessionStorage.getItem(
+    'konfirmasi_sukses'
+  ) != '1'
+){
+
+  window.location =
+    'index.html';
+}
+
+// disable back
+history.pushState(
+  null,
+  null,
+  location.href
+);
+
+window.onpopstate =
+  function(){
+
+    history.go(1);
+  };
+
+</script>
+
+</body>
+</html>
