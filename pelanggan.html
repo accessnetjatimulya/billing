@@ -389,9 +389,10 @@ body{
   </div>
   
   <button
-    class="button"
-  >
-    Konfirmasi Pembayaran
+	  class="button"
+	  onclick="konfirmasiPembayaran()"
+	>
+	  Konfirmasi Pembayaran
   </button>
 
   <button
@@ -560,6 +561,12 @@ function logout(){
 
   window.location =
     'index.html';
+}
+
+function konfirmasiPembayaran(){
+
+  window.location =
+    'konfirmasi.html';
 }
 
 </script>
