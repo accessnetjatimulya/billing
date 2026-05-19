@@ -339,7 +339,7 @@ body{
         class="value"
         id="periode"
       >
-        Mei 2026
+        -
       </div>
 
     </div>
@@ -412,6 +412,27 @@ const data =
     )
   );
 
+function getStatus(data){
+
+  // belum pernah bayar
+  if(!data.updated_at){
+    return 'BELUM BAYAR';
+  }
+
+  const now = new Date();
+
+  const expired =
+    new Date(data.expired_at);
+
+  // sudah expired
+  if(now > expired){
+    return 'EXPIRED';
+  }
+
+  // masih aktif
+  return 'LUNAS';
+}
+  
 if(!data){
 
   window.location =
@@ -441,6 +462,62 @@ document.getElementById(
     data.harga || 0
   ).toLocaleString('id-ID');
 
+const status =
+  getStatus(data);
+
+const statusEl =
+  document.getElementById('status');
+
+statusEl.innerHTML =
+  status;
+
+statusEl.classList.remove(
+  'belum',
+  'lunas'
+);
+
+// BELUM BAYAR
+if(status == 'BELUM BAYAR'){
+
+  statusEl.classList.add(
+    'belum'
+  );
+}
+
+// LUNAS
+if(status == 'LUNAS'){
+
+  statusEl.classList.add(
+    'lunas'
+  );
+}
+
+// EXPIRED
+if(status == 'EXPIRED'){
+
+  statusEl.style.background =
+    '#ff174420';
+
+  statusEl.style.color =
+    '#ff5252';
+}
+
+if(data.expired_at){
+
+  document.getElementById(
+    'periode'
+  ).innerHTML =
+    new Date(
+      data.expired_at
+    ).toLocaleDateString(
+      'id-ID',
+      {
+        month:'long',
+        year:'numeric'
+      }
+    );
+}  
+    
 function logout(){
 
   localStorage.removeItem(
