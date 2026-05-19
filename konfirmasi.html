@@ -312,18 +312,61 @@ function hapusFile(){
 }
 
 /* ===== KONFIRMASI ===== */
-function kirimKonfirmasi(){
+async function kirimKonfirmasi(){
 
-  const file =
-    document.getElementById('bukti').files[0];
+  const file = document.getElementById('bukti').files[0];
 
   if(!file){
     showPopup('Upload screenshot pembayaran dulu');
     return;
   }
 
-  sessionStorage.setItem('konfirmasi_sukses','1');
-  window.location = 'success.html';
+  const data = JSON.parse(localStorage.getItem('pelanggan'));
+
+  const base64 = await toBase64(file);
+
+  const payload = {
+    action: "konfirmasiPembayaran",
+    id: data.id,
+    nama: data.nama,
+    paket: data.paket,
+    harga: data.harga,
+    fileBase64: base64.split(',')[1],
+    mimeType: file.type
+  };
+
+  const res = await fetch("https://script.google.com/macros/s/AKfycbxivwmZiHmUFOJtB_VqoosALLG_B7r54seSsW3SX736euXWv-AXm5BHaJjekRekC1O3/exec", {
+	  method: "POST",
+	  headers: {
+		"Content-Type": "application/json"
+	  },
+	  body: JSON.stringify(payload)
+	});
+	
+	if(!res.ok){
+	  showPopup("Server error / gagal koneksi");
+	  return;
+	}
+
+  const result = await res.json();
+
+  if(result.status){
+
+    sessionStorage.setItem('konfirmasi_sukses','1');
+    window.location = 'success.html';
+
+  } else {
+    showPopup('Gagal kirim ke server');
+  }
+}
+
+function toBase64(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
 }
 
 /* ===== BACK ===== */
