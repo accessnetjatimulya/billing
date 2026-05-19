@@ -90,6 +90,14 @@ input[type=file]{
     </div>
 
     <div class="info">
+      <div class="label">ID Pelanggan</div>
+      <div
+        class="value"
+        id="idpelanggan"
+      ></div>
+    </div>
+    
+    <div class="info">
       <div class="label">Nama</div>
       <div
         class="value"
@@ -125,12 +133,15 @@ input[type=file]{
       class="preview"
     >
 
-    <button
-      class="button"
-      onclick="kirimKonfirmasi()"
-    >
-      Lanjutkan Konfirmasi Pembayaran
-    </button>
+   <!-- Tombol Lanjut Konfirmasi -->
+  <button type="button" class="btn btn-success w-100 mt-3" onclick="lanjutKonfirmasi()">
+    Lanjutkan Konfirmasi Pembayaran
+  </button>
+  
+  <!-- Tombol Kembali (di bawah) -->
+  <button type="button" class="btn btn-secondary w-100 mt-2" onclick="goBack()">
+    Kembali
+  </button>
 
   </div>
 
@@ -151,6 +162,11 @@ if(!data){
     'index.html';
 }
 
+document.getElementById(
+  'idpelanggan'
+).innerHTML =
+  data.id;
+  
 document.getElementById(
   'nama'
 ).innerHTML =
@@ -224,6 +240,15 @@ function kirimKonfirmasi(){
 }
 
 </script>
-
+<script>
+  function goBack() {
+    if (document.referrer !== "") {
+      window.history.back();
+    } else {
+      window.location.href = "index.html"; // ganti sesuai halaman utama kamu
+    }
+  }
+</script>
+  
 </body>
 </html>
