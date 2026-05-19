@@ -3,22 +3,27 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Konfirmasi Pembayaran</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-  margin:0;
+  margin:auto;
   padding:20px;
-  background:#07152f;
+  min-height:100vh;
+  background:
+    radial-gradient(
+      circle at top left,
+      #173b8f 0%,
+      #07152f 45%,
+      #020817 100%
+    );
   color:white;
-  font-family:Poppins,sans-serif;
+  font-family:'Poppins',sans-serif;
 }
 
 .container{
@@ -27,58 +32,120 @@ body{
 }
 
 .card{
-  background:#13254d;
-  padding:20px;
-  border-radius:20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(28,48,95,0.96),
+      rgba(12,18,35,0.97)
+    );
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 40px rgba(0,0,0,0.35);
 }
 
 .title{
-  font-size:22px;
+  font-size:20px;
   font-weight:700;
-  margin-bottom:20px;
   text-align:center;
-}
-
-.info{
-  margin-bottom:12px;
+  margin-bottom:20px;
 }
 
 .label{
   font-size:13px;
-  opacity:.7;
+  color:#b8c4da;
+  margin-top:10px;
 }
 
 .value{
   font-size:16px;
   font-weight:600;
+  color:white;
 }
 
 input[type=file]{
-  width:100%;
-  margin-top:20px;
-  margin-bottom:20px;
+  width:92%;
+  margin-top:10px;
+  margin-bottom:10px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  color:#000;
 }
+
+.preview{
+  width:100%;
+  margin-top:10px;
+  border-radius:12px;
+  display:none;
+}
+
+/* ===== BUTTON STYLE SAMA PELANGGAN ===== */
 
 .button{
   width:100%;
   height:54px;
   border:none;
   border-radius:14px;
-  background:#2563eb;
+  background:linear-gradient(90deg,#2563eb,#1d4ed8);
   color:white;
   font-size:15px;
   font-weight:600;
+  cursor:pointer;
 }
 
-.preview{
-  width:100%;
-  margin-top:15px;
-  border-radius:12px;
-  display:none;
+.logout-btn{
+  margin-top:12px;
+  background:linear-gradient(90deg,#2563eb,#1d4ed8);
 }
+
+.file-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+}
+
+/* native input */
+.file-row input[type=file]{
+  flex:1;
+  background:#fff;
+  padding:10px;
+  border-radius:10px;
+
+  font-size:13px;
+}
+
+/* sembunyikan teks file default (trik browser) */
+.file-row input[type=file]::file-selector-button{
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* tombol hapus */
+.trash-btn{
+  width:44px;
+  height:52px;
+  border:none;
+  border-radius:10px;
+  background:#ffffff;
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
 
 </style>
+
 </head>
+
 <body>
 
 <div class="container">
@@ -89,165 +156,124 @@ input[type=file]{
       Konfirmasi Pembayaran
     </div>
 
-    <div class="info">
-      <div class="label">ID Pelanggan</div>
-      <div
-        class="value"
-        id="idpelanggan"
-      ></div>
-    </div>
-    
-    <div class="info">
-      <div class="label">Nama</div>
-      <div
-        class="value"
-        id="nama"
-      ></div>
-    </div>
+    <div class="label">ID Pelanggan</div>
+    <div class="value" id="idpelanggan"></div>
 
-    <div class="info">
-      <div class="label">Paket</div>
-      <div
-        class="value"
-        id="paket"
-      ></div>
-    </div>
+    <div class="label">Nama</div>
+    <div class="value" id="nama"></div>
 
-    <div class="info">
-      <div class="label">Total Tagihan</div>
-      <div
-        class="value"
-        id="harga"
-      ></div>
-    </div>
+    <div class="label">Paket</div>
+    <div class="value" id="paket"></div>
 
-    <input
-      type="file"
-      id="bukti"
-      accept="image/*"
-      onchange="previewImage(event)"
-    >
+    <div class="label">Total Tagihan</div>
+    <div class="value" id="harga"></div>
+	
+	<div class="label" style="margin-top:15px;">
+	  Silahkan upload hasil screenshoot anda di bawah ini
+	</div>
 
-    <img
-      id="preview"
-      class="preview"
-    >
+	<div class="file-row">
 
-    <!-- Tombol Lanjut -->
-    <button type="button" class="btn btn-success w-100 mt-3" onclick="lanjutKonfirmasi()">
-      Lanjutkan Konfirmasi Pembayaran
-    </button>
-    
-    <!-- Tombol Kembali -->
-    <button type="button" class="btn btn-secondary w-100 mt-2" onclick="goBack()">
-      ← Kembali
-    </button>
+	  <input
+		type="file"
+		id="bukti"
+		accept="image/*"
+		onchange="previewImage(event)"
+	  >
+
+	  <button type="button" class="trash-btn" onclick="hapusFile()">
+		🗑️
+	  </button>
+
+	</div>
+
+    <img id="preview" class="preview">
 
   </div>
+
+</div>
+
+<!-- TOMBOL DI LUAR CARD (SAMA PELANGGAN.HTML) -->
+<div class="container">
+
+  <button class="button" onclick="kirimKonfirmasi()">
+    Lanjutkan Konfirmasi Pembayaran
+  </button>
+
+  <button class="button logout-btn" onclick="goBack()">
+    Kembali
+  </button>
 
 </div>
 
 <script>
 
 const data =
-  JSON.parse(
-    localStorage.getItem(
-      'pelanggan'
-    )
-  );
+  JSON.parse(localStorage.getItem('pelanggan'));
 
 if(!data){
-
-  window.location =
-    'index.html';
+  window.location = 'index.html';
 }
 
-document.getElementById(
-  'idpelanggan'
-).innerHTML =
-  data.id;
-  
-document.getElementById(
-  'nama'
-).innerHTML =
-  data.nama;
+/* ===== LOAD DATA (AMAN, TIDAK DIUBAH) ===== */
+document.getElementById('idpelanggan').innerHTML = data.id;
+document.getElementById('nama').innerHTML = data.nama;
+document.getElementById('paket').innerHTML = data.paket;
+document.getElementById('harga').innerHTML =
+  'Rp ' + Number(data.harga).toLocaleString('id-ID');
 
-document.getElementById(
-  'paket'
-).innerHTML =
-  data.paket;
-
-document.getElementById(
-  'harga'
-).innerHTML =
-  'Rp ' +
-  Number(data.harga)
-    .toLocaleString('id-ID');
-
+/* ===== PREVIEW IMAGE ===== */
 function previewImage(event){
 
-  const file =
-    event.target.files[0];
-
+  const file = event.target.files[0];
   if(!file) return;
 
-  const reader =
-    new FileReader();
+  const reader = new FileReader();
 
-  reader.onload =
-    function(e){
-
-      const img =
-        document.getElementById(
-          'preview'
-        );
-
-      img.src =
-        e.target.result;
-
-      img.style.display =
-        'block';
-    };
+  reader.onload = function(e){
+    const img = document.getElementById('preview');
+    img.src = e.target.result;
+    img.style.display = 'block';
+  };
 
   reader.readAsDataURL(file);
 }
 
+function hapusFile(){
+
+  const input = document.getElementById('bukti');
+  const img = document.getElementById('preview');
+
+  input.value = "";
+  img.src = "";
+  img.style.display = "none";
+}
+
+/* ===== KONFIRMASI ===== */
 function kirimKonfirmasi(){
 
   const file =
-    document.getElementById(
-      'bukti'
-    ).files[0];
+    document.getElementById('bukti').files[0];
 
   if(!file){
-
-    alert(
-      'Upload screenshot pembayaran dulu'
-    );
-
+    alert('Upload screenshot pembayaran dulu');
     return;
   }
 
-  // nanti konek telegram di sini
+  sessionStorage.setItem('konfirmasi_sukses','1');
+  window.location = 'success.html';
+}
 
-  sessionStorage.setItem(
-    'konfirmasi_sukses',
-    '1'
-  );
-
-  window.location =
-    'success.html';
+/* ===== BACK ===== */
+function goBack(){
+  if(document.referrer !== ""){
+    window.history.back();
+  } else {
+    window.location = "pelanggan.html";
+  }
 }
 
 </script>
-<script>
-  function goBack() {
-    if (document.referrer !== "") {
-      window.history.back();
-    } else {
-      window.location.href = "pelanggan.html";
-    }
-  }
-</script>  
+
 </body>
 </html>
