@@ -315,40 +315,38 @@ function hapusFile(){
 async function kirimKonfirmasi(){
 
   const file = document.getElementById('bukti').files[0];
-
   if(!file){
-    showPopup('Upload screenshot pembayaran dulu');
+    showPopup("Upload bukti dulu");
     return;
   }
 
-  const data = JSON.parse(localStorage.getItem('pelanggan'));
-
+  const pelanggan = JSON.parse(localStorage.getItem('pelanggan'));
   const base64 = await toBase64(file);
 
   const payload = {
     action: "konfirmasiPembayaran",
-    id: data.id,
-    nama: data.nama,
-    paket: data.paket,
-    harga: data.harga,
+    id: pelanggan.id,
+    nama: pelanggan.nama,
+    paket: pelanggan.paket,
+    harga: pelanggan.harga,
     fileBase64: base64.split(',')[1],
     mimeType: file.type
   };
 
-  const res = await fetch("https://script.google.com/macros/s/AKfycby3BN4dH7foIR5fG0aYJ1dyshgHKT-eLWsx1s3uIDoJ8vLcaBJDShiXDpR7hUzPrJL4/exec", {
-	  method: "POST",
-	  body: JSON.stringify(payload)
-	});
-	
+  const res = await fetch("https://script.google.com/macros/s/AKfycbyJklnPeG3dGhhFM_fFHxG7DRBd4kTFjqpDNh_r9bUZppVQBRzA2YUuL571tbMaD1Ot/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
   const result = await res.json();
 
   if(result.status){
-
-    sessionStorage.setItem('konfirmasi_sukses','1');
-    window.location = 'success.html';
-
+    alert("Berhasil terkirim ke Telegram");
   } else {
-    showPopup('Gagal kirim ke server');
+    alert(result.message);
   }
 }
 
