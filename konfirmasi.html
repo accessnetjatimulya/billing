@@ -344,7 +344,7 @@ async function kirimKonfirmasi(){
 	form.append("fileBase64", base64.split(',')[1]);
 	form.append("mimeType", file.type);
 	
-  const res = await fetch("URL_APPS_SCRIPT", {
+  const res = await fetch("https://script.google.com/macros/s/AKfycby3BN4dH7foIR5fG0aYJ1dyshgHKT-eLWsx1s3uIDoJ8vLcaBJDShiXDpR7hUzPrJL4/exec", {
 	  method: "POST",
 	  body: form
   });
