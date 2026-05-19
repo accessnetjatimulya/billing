@@ -114,7 +114,6 @@ input[type=file]{
   background:#fff;
   padding:10px;
   border-radius:10px;
-
   font-size:13px;
 }
 
@@ -147,14 +146,11 @@ input[type=file]{
   left:0;
   width:100%;
   height:100%;
-
   background:rgba(0,0,0,0.6);
   backdrop-filter:blur(5px);
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   z-index:9999;
 }
 
@@ -165,14 +161,11 @@ input[type=file]{
 .popup-box{
   width:75%;
   max-width:320px;
-
   background:#111a2e;
   border:1px solid rgba(255,255,255,0.1);
   border-radius:16px;
-
   padding:20px;
   text-align:center;
-
   box-shadow:0 10px 40px rgba(0,0,0,0.5);
 }
 
@@ -193,13 +186,10 @@ input[type=file]{
 .popup-btn{
   width:100%;
   height:44px;
-
   border:none;
   border-radius:10px;
-
   background:linear-gradient(90deg,#2563eb,#1d4ed8);
   color:#fff;
-
   font-weight:600;
   cursor:pointer;
 }
@@ -255,7 +245,6 @@ input[type=file]{
 
 </div>
 
-<!-- TOMBOL DI LUAR CARD (SAMA PELANGGAN.HTML) -->
 <div class="container">
 
   <button class="button" onclick="kirimKonfirmasi()">
@@ -316,7 +305,7 @@ async function kirimKonfirmasi(){
 
   const file = document.getElementById('bukti').files[0];
   if(!file){
-    showPopup("Upload bukti dulu");
+    showPopup("Upload bukti screenshoot dulu");
     return;
   }
 
@@ -353,6 +342,10 @@ async function kirimKonfirmasi(){
     const result = await res.json();
 
     if(result.status){
+      // TULIS INI SEBELUM PINDAH HALAMAN:
+      // Membuka kunci token status sukses agar halaman success.html tidak memantulkan user ke index.html
+      sessionStorage.setItem('konfirmasi_sukses', '1');
+
       // PENTING: Langsung alihkan ke halaman sukses tanpa alert/popup
       window.location.href = "success.html";
     } else {
@@ -387,11 +380,10 @@ function goBack(){
   }
 }
 
+// Popup Peringatan Kustom Internal
 function showPopup(message){
-
   document.getElementById('popup-text').innerText = message;
   document.getElementById('popup').classList.remove('hidden');
-
 }
 
 function closePopup(){
@@ -399,8 +391,6 @@ function closePopup(){
 }
 
 </script>
-
-
 
 <div id="popup" class="popup hidden">
 
@@ -421,7 +411,6 @@ function closePopup(){
   </div>
 
 </div>
-
 
 </body>
 </html>
