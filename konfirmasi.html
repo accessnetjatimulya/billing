@@ -320,33 +320,53 @@ async function kirimKonfirmasi(){
     return;
   }
 
-  const pelanggan = JSON.parse(localStorage.getItem('pelanggan'));
-  const base64 = await toBase64(file);
+  // Mengambil tombol untuk efek loading
+  const btnKirim = document.querySelector(".button:not(.logout-btn)");
+  const originalText = btnKirim.innerText;
+  
+  // Set loading state
+  btnKirim.disabled = true;
+  btnKirim.innerText = "⏳ Sedang Mengirim...";
 
-  const payload = {
-    action: "konfirmasiPembayaran",
-    id: pelanggan.id,
-    nama: pelanggan.nama,
-    paket: pelanggan.paket,
-    harga: pelanggan.harga,
-    fileBase64: base64.split(',')[1],
-    mimeType: file.type
-  };
+  try {
+    const pelanggan = JSON.parse(localStorage.getItem('pelanggan'));
+    const base64 = await toBase64(file);
 
-  const res = await fetch("https://script.google.com/macros/s/AKfycbyJklnPeG3dGhhFM_fFHxG7DRBd4kTFjqpDNh_r9bUZppVQBRzA2YUuL571tbMaD1Ot/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
+    const payload = {
+      action: "konfirmasiPembayaran",
+      id: pelanggan.id,
+      nama: pelanggan.nama,
+      paket: pelanggan.paket,
+      harga: pelanggan.harga,
+      fileBase64: base64.split(',')[1],
+      mimeType: file.type
+    };
 
-  const result = await res.json();
+    // PERBAIKAN UTAMA: Menggunakan text/plain agar tidak memicu CORS Preflight (OPTIONS)
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyVXNgP47BhX-b5C_u512bqTFOinDIsKSE_HBpLPQNzui4A0gOT7HFI-zdVYpYcwK51/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain" 
+      },
+      body: JSON.stringify(payload)
+    });
 
-  if(result.status){
-    alert("Berhasil terkirim ke Telegram");
-  } else {
-    alert(result.message);
+    const result = await res.json();
+
+    if(result.status){
+      alert("Berhasil terkirim ke Telegram");
+      hapusFile(); // Reset form gambar setelah sukses
+    } else {
+      showPopup("Gagal: " + result.message);
+    }
+
+  } catch (error) {
+    console.error(error);
+    showPopup("Terjadi kesalahan koneksi atau sistem.");
+  } finally {
+    // Kembalikan tombol ke sedia kala
+    btnKirim.disabled = false;
+    btnKirim.innerText = originalText;
   }
 }
 
