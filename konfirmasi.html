@@ -335,7 +335,7 @@ async function kirimKonfirmasi(){
     mimeType: file.type
   };
 
-	fetch(https://script.google.com/macros/s/AKfycby3BN4dH7foIR5fG0aYJ1dyshgHKT-eLWsx1s3uIDoJ8vLcaBJDShiXDpR7hUzPrJL4/exec, {
+  const res = await fetch("https://script.google.com/macros/s/AKfycby3BN4dH7foIR5fG0aYJ1dyshgHKT-eLWsx1s3uIDoJ8vLcaBJDShiXDpR7hUzPrJL4/exec", {
 	  method: "POST",
 	  body: JSON.stringify(payload)
 	});
