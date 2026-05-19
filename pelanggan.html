@@ -412,43 +412,6 @@ const data =
     )
   );
 
-function parseTanggal(str){
-
-  if(!str) return null;
-
-  // rapikan spasi
-  str = str.replace(/\s+/g,' ').trim();
-
-  // pisah tanggal & waktu
-  const parts = str.split(' ');
-
-  const tanggal = parts[0];
-  const waktu = parts[1] || '00.00';
-
-  // tanggal
-  const tgl = tanggal.split('/');
-
-  const dd = parseInt(tgl[0],10);
-  const mm = parseInt(tgl[1],10) - 1;
-  const yyyy = parseInt(tgl[2],10);
-
-  // waktu
-  const jamPart = waktu.split('.');
-
-  const hh = parseInt(jamPart[0] || 0,10);
-  const mi = parseInt(jamPart[1] || 0,10);
-  const ss = parseInt(jamPart[2] || 0,10);
-
-  // buat date manual
-  return new Date(
-    yyyy,
-    mm,
-    dd,
-    hh,
-    mi,
-    ss
-  );
-}
 
 function getStatus(data){
 
@@ -460,7 +423,7 @@ function getStatus(data){
   const now = new Date();
 
   const expired =
-    parseTanggal(data.expired_at);
+	new Date(data.expired_at);
 
   // sudah expired
   if(now > expired){
@@ -545,7 +508,7 @@ if(data.expired_at){
   document.getElementById(
     'periode'
   ).innerHTML =
-    parseTanggal(
+    new Date(
 	  data.expired_at
 	).toLocaleDateString(
       'id-ID',
