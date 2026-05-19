@@ -412,6 +412,30 @@ const data =
     )
   );
 
+function parseTanggal(str){
+
+  if(!str) return null;
+
+  const parts =
+    str.trim().split(' ');
+
+  const tanggal =
+    parts[0];
+
+  const waktu =
+    parts[1] || '00.00.00';
+
+  const [dd,mm,yyyy] =
+    tanggal.split('/');
+
+  const jam =
+    waktu.replace(/\./g,':');
+
+  return new Date(
+    `${yyyy}-${mm}-${dd}T${jam}`
+  );
+}
+
 function getStatus(data){
 
   // belum pernah bayar
@@ -422,7 +446,7 @@ function getStatus(data){
   const now = new Date();
 
   const expired =
-    new Date(data.expired_at);
+    parseTanggal(data.expired_at);
 
   // sudah expired
   if(now > expired){
@@ -507,9 +531,9 @@ if(data.expired_at){
   document.getElementById(
     'periode'
   ).innerHTML =
-    new Date(
-      data.expired_at
-    ).toLocaleDateString(
+    parseTanggal(
+	  data.expired_at
+	).toLocaleDateString(
       'id-ID',
       {
         month:'long',
