@@ -3,11 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>Konfirmasi Selesai</title>
 
@@ -82,31 +78,32 @@ body{
 </div>
 
 <script>
-
-// wajib lewat konfirmasi
-if(
-  sessionStorage.getItem(
-    'konfirmasi_sukses'
-  ) != '1'
-){
-
-  window.location =
-    'index.html';
+// 1. Kunci status di sessionStorage saat pertama kali mendarat dari konfirmasi.html
+// Ini mencegah user ditendang ke index.html ketika menekan tombol refresh
+if (!sessionStorage.getItem('konfirmasi_sukses_terkunci')) {
+  // Jika datang resmi membawa token 'konfirmasi_sukses', set kunci permanen selama tab dibuka
+  if (sessionStorage.getItem('konfirmasi_sukses') == '1') {
+    sessionStorage.setItem('konfirmasi_sukses_terkunci', '1');
+  }
 }
 
-// disable back
-history.pushState(
-  null,
-  null,
-  location.href
-);
+// 2. Validasi Keamanan: Jika tidak punya kunci akses, wajib ke index.html
+if (sessionStorage.getItem('konfirmasi_sukses_terkunci') !== '1') {
+  window.location.replace('index.html');
+}
 
-window.onpopstate =
-  function(){
+// 3. Matikan Fungsi Tombol Kembali (Disable Back)
+history.pushState(null, null, location.href);
+window.onpopstate = function(){
+  history.go(1);
+};
 
-    history.go(1);
-  };
-
+// Kunci tambahan untuk browser mobile (Chrome/Safari di HP) agar tidak bisa ditarik back
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    history.pushState(null, null, location.href);
+  }, 50);
+});
 </script>
 
 </body>
