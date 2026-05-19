@@ -335,13 +335,19 @@ async function kirimKonfirmasi(){
     mimeType: file.type
   };
 
-  const res = await fetch("https://script.google.com/macros/s/AKfycby3BN4dH7foIR5fG0aYJ1dyshgHKT-eLWsx1s3uIDoJ8vLcaBJDShiXDpR7hUzPrJL4/exec", {
+  const form = new FormData();
+	form.append("action", "konfirmasiPembayaran");
+	form.append("id", data.id);
+	form.append("nama", data.nama);
+	form.append("paket", data.paket);
+	form.append("harga", data.harga);
+	form.append("fileBase64", base64.split(',')[1]);
+	form.append("mimeType", file.type);
+	
+  const res = await fetch("URL_APPS_SCRIPT", {
 	  method: "POST",
-	  headers: {
-		"Content-Type": "application/json"
-	  },
-	  body: JSON.stringify(payload)
-	});
+	  body: form
+  });
 	
 	if(!res.ok){
 	  showPopup("Server error / gagal koneksi");
