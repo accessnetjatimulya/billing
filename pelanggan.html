@@ -416,21 +416,22 @@ function parseTanggal(str){
 
   if(!str) return null;
 
-  const parts =
-    str.trim().split(' ');
+  // rapikan spasi
+  str = str.replace(/\s+/g,' ').trim();
 
-  const tanggal =
-    parts[0];
+  // pisah tanggal & jam
+  const [tanggal,waktu='00.00'] =
+    str.split(' ');
 
-  const waktu =
-    parts[1] || '00.00.00';
-
+  // pisah tanggal
   const [dd,mm,yyyy] =
     tanggal.split('/');
 
+  // ubah titik jadi :
   const jam =
     waktu.replace(/\./g,':');
 
+  // buat format ISO
   return new Date(
     `${yyyy}-${mm}-${dd}T${jam}`
   );
