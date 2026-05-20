@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Status Tagihan</title>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -31,13 +20,9 @@ body{
 }
 
 body{
-
   min-height:100vh;
-
   padding:20px;
-
   font-family:'Poppins',sans-serif;
-
   background:
     radial-gradient(
       circle at top left,
@@ -45,221 +30,149 @@ body{
       #07152f 45%,
       #020817 100%
     );
-
   color:white;
 }
 
 .container{
-
   width:100%;
   max-width:420px;
-
   margin:auto;
 }
 
 .logo{
-
   width:120px;
-
   display:block;
-
   margin:auto;
   margin-bottom:20px;
 }
 
 .card{
-
   background:
     linear-gradient(
       145deg,
       rgba(28,48,95,0.96),
       rgba(12,18,35,0.97)
     );
-
   border:
     1px solid rgba(255,255,255,0.08);
-
   border-radius:22px;
-
   padding:22px;
-
   margin-bottom:18px;
-
   backdrop-filter:blur(10px);
-
   box-shadow:
     0 10px 40px rgba(0,0,0,0.35);
 }
 
 .title{
-
   font-size:14px;
-
   color:#9fb1d1;
-
   margin-bottom:0px;
 }
 
 .value{
-
   font-size:18px;
-
   font-weight:600;
-
   color:white;
 }
 
 .alamat{
-
   margin-top:0px;
-
   font-size:14px;
-
   color:#b8c4da;
-
   line-height:1.6;
 }
 
 .tagihan{
-
   padding:22px 20px;
 }
 
 .info-row{
-
   display:flex;
-
   justify-content:space-between;
-
   gap:20px;
 }
 
 .info-col{
-
   flex:1;
 }
 
 .right{
-
   text-align:right;
 }
 
 .nominal{
-
   font-size:24px;
-
   font-weight:700;
-
   color:#00ffcc;
 }
 
 .bill-row{
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   gap:15px;
-
   margin-top:0px;
 }
 
 .status{
-
   display:inline-block;
-
   padding:10px 18px;
-
   border-radius:50px;
-
   font-size:14px;
-
   font-weight:600;
+  text-transform: uppercase;
 }
 
 .belum{
-
   background:#ff980020;
-
   color:#ffb74d;
 }
 
 .lunas{
-
   background:#00c85320;
-
   color:#69f0ae;
 }
 
 .qris{
-
   width:100%;
-
   max-width:220px;
-
   display:block;
-
   margin:22px auto 16px;
-
   border-radius:5px;
 }
 
 .payment-info{
-
   margin-top:18px;
-
   margin-bottom: 18px;
-
   font-size:13px;
-
   line-height:1.8;
-
   color:#b8c4da;
-
   text-align:center;
 }
 
-
 .atasnama{
-
   text-align:center;
-
   font-size:14px;
-
   font-weight:600;
-
   color:white;
-
   margin-top:-2px;
-
   margin-bottom:14px;
 }
   
 .button{
-
   width:100%;
-
   height:54px;
-
   border:none;
-
   border-radius:14px;
-
   background:
     linear-gradient(
       90deg,
       #2563eb,
       #1d4ed8
     );
-
   color:white;
-
   font-size:15px;
-
   font-weight:600;
-
   cursor:pointer;
 }
 
@@ -268,16 +181,13 @@ body{
 }
 
 @media(max-width:480px){
-
   .nominal{
     font-size:20px;
   }
-
   .value{
     font-size:16px;
   }
 }
-
 </style>
 </head>
 <body>
@@ -291,109 +201,54 @@ body{
   >
 
   <div class="card">
-
-    <div class="title">
-      Nama Pelanggan
-    </div>
-
-    <div
-      class="value"
-      id="nama"
-    >
-      -
-    </div>
-
-    <div
-      class="alamat"
-      id="alamat"
-    >
-      -
-    </div>
-
+    <div class="title">Nama Pelanggan</div>
+    <div class="value" id="nama">-</div>
+    <div class="alamat" id="alamat">-</div>
   </div>
 
   <div class="card info-row">
-
     <div class="info-col">
-
-      <div class="title">
-        Paket Internet
-      </div>
-
-      <div
-        class="value"
-        id="paket"
-      >
-        -
-      </div>
-
+      <div class="title">Paket Internet</div>
+      <div class="value" id="paket">-</div>
     </div>
-
     <div class="info-col right">
-
-      <div class="title">
-        Periode
-      </div>
-
-      <div
-        class="value"
-        id="periode"
-      >
-        -
-      </div>
-
+      <div class="title">Periode</div>
+      <div class="value" id="periode">Memuat...</div>
     </div>
-
   </div>
 
   <div class="card tagihan">
-
-    <div class="title">
-      Total Tagihan
-    </div>
-
+    <div class="title">Total Tagihan</div>
     <div class="bill-row">
-
-      <div
-        class="nominal"
-        id="harga"
-      >
-        Rp 0
-      </div>
-
-      <div
-        class="status belum"
-        id="status"
-      >
-        BELUM BAYAR
-      </div>
-
+      <div class="nominal" id="harga">Rp 0</div>
+      <div class="status belum" id="status">MEMUAT...</div>
     </div>
-
   </div>
 
-  <div class="payment-info">
-    Untuk pembayaran silahkan scan QRIS dibawah ini dengan aplikasi E-Wallet Dana,ShopeePay,OVO,Gopay / Aplikasi Mbanking yang mendukung pembayaran metode QRIS.
-    Kemudian MASUKAN MANUAL JUMLAH NOMINAL Pembayaran yang tercantum pada Total Tagihan.
-    Setelah berhasil jangan lupa Screenshoot untuk dikirim Lewat tombol Konfirmasi Pembayaran.
+  <div id="areaPembayaran" style="display: none;">
+    <div class="payment-info">
+      Untuk pembayaran silahkan scan QRIS dibawah ini dengan aplikasi E-Wallet Dana,ShopeePay,OVO,Gopay / Aplikasi Mbanking yang mendukung pembayaran metode QRIS.
+      Kemudian MASUKAN MANUAL JUMLAH NOMINAL Pembayaran yang tercantum pada Total Tagihan.
+      Setelah berhasil jangan lupa Screenshoot untuk dikirim Lewat tombol Konfirmasi Pembayaran.
+    </div>
+    
+    <img
+      src="https://drive.google.com/thumbnail?id=1xEiSuIVuzu379VLMsOIK3X6xs0QmDdRA"
+      class="qris"
+      alt="QRIS"
+    />
+    
+    <div class="atasnama">
+      <b>Atas Nama : ACCESSNET JATIMULYA</b>
+    </div>
+    
+    <button
+      class="button"
+      onclick="konfirmasiPembayaran()"
+    >
+      Konfirmasi Pembayaran
+    </button>
   </div>
-  
-  <img
-    src="https://drive.google.com/thumbnail?id=1xEiSuIVuzu379VLMsOIK3X6xs0QmDdRA"
-    class="qris"
-    alt="QRIS"
-  />
-  
-  <div class="atasnama">
-    <b>Atas Nama : ACCESSNET JATIMULYA</b>
-  </div>
-  
-  <button
-	  class="button"
-	  onclick="konfirmasiPembayaran()"
-	>
-	  Konfirmasi Pembayaran
-  </button>
 
   <button
     class="button logout-btn"
@@ -405,170 +260,131 @@ body{
 </div>
 
 <script>
+// Ambil data session login pelanggan dari local storage
+const data = JSON.parse(localStorage.getItem('pelanggan'));
 
-const data =
-  JSON.parse(
-    localStorage.getItem(
-      'pelanggan'
-    )
-  );
+if(!data){
+  window.location = 'index.html';
+}
 
+// Pasang Profil Dasar Pelanggan Langsung Saat Terbuka
+document.getElementById('nama').innerHTML = data.nama || '-';
+document.getElementById('paket').innerHTML = data.paket || '-';
+document.getElementById('alamat').innerHTML = data.alamat || '-';
+document.getElementById('harga').innerHTML = 'Rp ' + Number(data.harga || 0).toLocaleString('id-ID');
 
+const opsiBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+// Fungsi pembongkaran string tanggal database sheet ("dd/mm/yyyy hh.mm")
 function parseTanggal(str){
-
   if(!str) return null;
-
   str = str.trim();
-
-  const [tanggal,waktu] =
-    str.split(' ');
-
-  const [dd,mm,yyyy] =
-    tanggal.split('/');
-
+  const [tanggal, waktu] = str.split(' ');
+  const [dd, mm, yyyy] = tanggal.split('/');
   let hh = 0;
   let mi = 0;
 
   if(waktu){
-
-    const jam =
-      waktu.split('.');
-
+    const jam = waktu.split('.');
     hh = parseInt(jam[0]) || 0;
     mi = parseInt(jam[1]) || 0;
   }
 
-  return new Date(
-    Number(yyyy),
-    Number(mm)-1,
-    Number(dd),
-    hh,
-    mi
-  );
+  return new Date(Number(yyyy), Number(mm)-1, Number(dd), hh, mi);
 }
 
-function getStatus(data){
+// FUNGSI UTAMA AMBIL WAKTU INTERNET & HITUNG LOGIKA STATUS
+async function inisialisasiHalamanWaktuInternet() {
+  let today = new Date(); // Cadangan default jika internet putus
+  let nowForExpired = new Date(); // Menyimpan waktu detail untuk pengecekan expired jam/menit
 
-  // belum pernah bayar
-  if(!data.updated_at){
-    return 'BELUM BAYAR';
-  }
+  try {
+    // Meminta tanggal real-time zona waktu Indonesia (WIB / Jakarta) dengan limit waktu tunggu 4 detik
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-  const now = new Date();
+    const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Jakarta', { signal: controller.signal });
+    clearTimeout(timeoutId);
 
-  const expired =
-    parseTanggal(data.expired_at);
-
-  // sudah expired
-  if(now > expired){
-    return 'EXPIRED';
-  }
-
-  // masih aktif
-  return 'LUNAS';
-}
-  
-if(!data){
-
-  window.location =
-    'index.html';
-}
-
-document.getElementById(
-  'nama'
-).innerHTML =
-  data.nama || '-';
-
-document.getElementById(
-  'paket'
-).innerHTML =
-  data.paket || '-';
-
-document.getElementById(
-  'alamat'
-).innerHTML =
-  data.alamat || '-';
-
-document.getElementById(
-  'harga'
-).innerHTML =
-  'Rp ' +
-  Number(
-    data.harga || 0
-  ).toLocaleString('id-ID');
-
-const status =
-  getStatus(data);
-
-const statusEl =
-  document.getElementById('status');
-
-statusEl.innerHTML =
-  status;
-
-statusEl.classList.remove(
-  'belum',
-  'lunas'
-);
-
-// BELUM BAYAR
-if(status == 'BELUM BAYAR'){
-
-  statusEl.classList.add(
-    'belum'
-  );
-}
-
-// LUNAS
-if(status == 'LUNAS'){
-
-  statusEl.classList.add(
-    'lunas'
-  );
-}
-
-// EXPIRED
-if(status == 'EXPIRED'){
-
-  statusEl.style.background =
-    '#ff174420';
-
-  statusEl.style.color =
-    '#ff5252';
-}
-
-if(data.expired_at){
-
-  document.getElementById(
-    'periode'
-  ).innerHTML =
-    parseTanggal(
-	  data.expired_at
-	).toLocaleDateString(
-      'id-ID',
-      {
-        month:'long',
-        year:'numeric'
+    if (response.ok) {
+      const dataWaktu = await response.json();
+      if(dataWaktu && dataWaktu.datetime) {
+        today = new Date(dataWaktu.datetime);
+        nowForExpired = new Date(dataWaktu.datetime);
       }
-    );
-}  
+    }
+  } catch (error) {
+    console.warn("Gagal terhubung ke WorldTimeAPI, otomatis beralih menggunakan jam perangkat lokal.", error);
+  }
+
+  // 1. Tulis Periode Tagihan otomatis mengikuti Bulan Berjalan dari Internet
+  const periodeSekarang = opsiBulan[today.getMonth()] + " " + today.getFullYear();
+  document.getElementById('periode').innerHTML = periodeSekarang;
+
+  // 2. Kalkulasi Penentu Status Tagihan Harian
+  let statusHasil = 'BELUM BAYAR';
+  
+  if (!data.updated_at) {
+    statusHasil = 'BELUM BAYAR';
+  } else if (data.expired_at) {
+    const expired = parseTanggal(data.expired_at);
     
+    if (expired) {
+      if (nowForExpired > expired) {
+        statusHasil = 'EXPIRED';
+      } else {
+        // Normalisasi untuk perhitungan sisa hari H-5 jatuh tempo (berbasis tanggal saja)
+        const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const expZero = new Date(expired.getFullYear(), expired.getMonth(), expired.getDate());
+        
+        const diffTime = expZero.getTime() - todayZero.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        // Jika sisa masa aktif lebih dari 5 hari, statusnya Lunas
+        if (diffDays > 5) {
+          statusHasil = 'LUNAS';
+        }
+      }
+    }
+  }
+
+  // 3. Render Status Hasil Akhir ke Layar Pelanggan beserta Style Visualnya
+  const statusEl = document.getElementById('status');
+  const areaPembayaran = document.getElementById('areaPembayaran');
+
+  statusEl.innerHTML = statusHasil;
+  statusEl.classList.remove('belum', 'lunas');
+  statusEl.style.background = ''; // reset style inline
+  statusEl.style.color = '';
+
+  if(statusHasil === 'BELUM BAYAR'){
+    statusEl.classList.add('belum');
+    areaPembayaran.style.display = 'block'; // Tampilkan instruksi transfer & QRIS
+  } 
+  else if (statusHasil === 'LUNAS') {
+    statusEl.classList.add('lunas');
+    statusEl.style.background = '#00c85320';
+    statusEl.style.color = '#69f0ae';
+    areaPembayaran.style.display = 'none';  // Sembunyikan QRIS karena sudah lunas di atas H-5
+  } 
+  else if (statusHasil === 'EXPIRED') {
+    statusEl.style.background = '#ff174420';
+    statusEl.style.color = '#ff5252';
+    areaPembayaran.style.display = 'block'; // Tetap tampilkan QRIS agar bisa bayar ulang
+  }
+}
+
+// Jalankan otomatis saat halaman dimuat
+inisialisasiHalamanWaktuInternet();
+
 function logout(){
-
-  localStorage.removeItem(
-    'pelanggan'
-  );
-
-  window.location =
-    'index.html';
+  localStorage.removeItem('pelanggan');
+  window.location = 'index.html';
 }
 
 function konfirmasiPembayaran(){
-
-  window.location =
-    'konfirmasi.html';
+  window.location = 'konfirmasi.html';
 }
-
 </script>
 
 </body>

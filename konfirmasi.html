@@ -217,6 +217,9 @@ input[type=file]{
     <div class="label">Paket</div>
     <div class="value" id="paket"></div>
 
+    <div class="label">Periode Tagihan</div>
+    <div class="value" id="periode">Memuat...</div>
+
     <div class="label">Total Tagihan</div>
     <div class="value" id="harga"></div>
 	
@@ -273,6 +276,36 @@ document.getElementById('paket').innerHTML = data.paket;
 document.getElementById('harga').innerHTML =
   'Rp ' + Number(data.harga).toLocaleString('id-ID');
 
+const opsiBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+let periodeGlobal = ""; // Tempat menyimpan nama periode yang akan ikut dikirim
+
+// FUNGSI UNTUK MENDAPATKAN PERIODE BULAN BERJALAN DARI INTERNET VIA API
+async function inisialisasiPeriodeInternet() {
+  let today = new Date();
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+    const response = await fetch('https://worldtimeapi.org/api/timezone/Asia/Jakarta', { signal: controller.signal });
+    clearTimeout(timeoutId);
+
+    if (response.ok) {
+      const dataWaktu = await response.json();
+      if(dataWaktu && dataWaktu.datetime) {
+        today = new Date(dataWaktu.datetime);
+      }
+    }
+  } catch (error) {
+    console.warn("Gagal mengambil waktu internet untuk periode, beralih ke jam perangkat.");
+  }
+  
+  periodeGlobal = opsiBulan[today.getMonth()] + " " + today.getFullYear();
+  document.getElementById('periode').innerHTML = periodeGlobal;
+}
+
+// Jalankan otomatis pencatatan periode saat halaman dimuat
+inisialisasiPeriodeInternet();
+
 /* ===== PREVIEW IMAGE ===== */
 function previewImage(event){
 
@@ -326,6 +359,7 @@ async function kirimKonfirmasi(){
       id: pelanggan.id,
       nama: pelanggan.nama,
       paket: pelanggan.paket,
+      periode: periodeGlobal, // <-- DATA PERIODE BERHASIL DISISIPKAN DI SINI
       harga: pelanggan.harga,
       fileBase64: base64.split(',')[1],
       mimeType: file.type
